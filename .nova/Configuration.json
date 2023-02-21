@@ -1,0 +1,11 @@
+{
+  "eablokker.tabsSidebar.config.customKindGroupsOrder" : [
+    "plaintext"
+  ],
+  "eablokker.tabsSidebar.config.customTabOrder" : [
+    "\/Users\/willy\/Projects\/lacek\/.gitattributes",
+    "\/Users\/willy\/Projects\/lacek\/.gitignore"
+  ],
+  "workspace.art_style" : 0,
+  "workspace.name" : "lacek"
+}

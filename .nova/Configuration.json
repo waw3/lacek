@@ -1,10 +1,9 @@
 {
   "eablokker.tabsSidebar.config.customKindGroupsOrder" : [
-    "plaintext"
+    "javascript"
   ],
   "eablokker.tabsSidebar.config.customTabOrder" : [
-    "\/Users\/willy\/Projects\/lacek\/.gitattributes",
-    "\/Users\/willy\/Projects\/lacek\/.gitignore"
+    "\/Users\/willy\/Projects\/lacek\/vite.config.js"
   ],
   "workspace.art_style" : 0,
   "workspace.name" : "lacek"

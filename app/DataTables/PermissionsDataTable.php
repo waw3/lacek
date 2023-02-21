@@ -36,16 +36,16 @@ class PermissionsDataTable extends DataTable
         })
         ->addColumn('edit', function ($permission) {
             $url = url(route('dashboard.permissions.edit', $permission->id));
-            $EditButton = '<a href="' . $url . '">Edit</a>';
+            $EditButton = '<a class="btn btn-danger btn-sm" href="' . $url . '"><i class="fa fa-pencil"></i></a>';
             return $EditButton;
         })
         ->addColumn('delete', function ($permission) {
             $url = url(route('dashboard.permissions.destroy', $permission->id));
             $csrf = csrf_token();
-            $DelButton = '<form action="' . $url . '" method="post">
+            $DelButton = '<form action="' . $url . '" method="post" onsubmit="return confirm(\'are you sure you want to delete this permission?\')">
                 <input type="hidden" name="_token" value="' . $csrf . '" />
                 <input type="hidden" name="_method" value="delete">
-                <button class="btn btn-danger btn-sm">del</button>
+                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                 </form>';
             return $DelButton;
         })
@@ -98,13 +98,15 @@ class PermissionsDataTable extends DataTable
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('edit')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60),
+                ->title('')
+                ->exportable(false)
+                ->printable(false)
+                ->width(50),
             Column::computed('delete')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60),
+                ->title('')
+                ->exportable(false)
+                ->printable(false)
+                ->width(50)
         ];
     }
 

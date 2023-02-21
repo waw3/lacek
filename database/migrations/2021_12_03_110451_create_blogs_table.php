@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\User;
 
-return new class extends Migration
+class CreateBlogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,16 +14,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('description')->nullable();
+            $table->string('slug');
+            $table->string('photo')->default('images/default.png');
+            $table->string('video')->nullable();
+            $table->text('content')->nullable();
+            $table->string('status')->default('INACTIVE');
             $table->foreignIdFor(User::class);
-            $table->tinyInteger('publish')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-
         });
     }
 
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('blogs');
     }
-};
+}

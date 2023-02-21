@@ -8,7 +8,7 @@
                     L<span class="opacity-75">G</span>
                 </span>
                 <span class="smini-hidden">
-                    Lacek<span class="opacity-75">Group</span>
+                    Lacek <span class="opacity-75">Group</span>
                 </span>
             </a>
             <!-- END Logo -->
@@ -51,10 +51,15 @@
                     <a class="nav-main-link {{ routeIs('dashboard.index', 'active') }}" href="{{ route('dashboard.index') }}">
                         <i class="nav-main-link-icon fa fa-location-arrow"></i>
                         <span class="nav-main-link-name">Dashboard</span>
-                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>
                     </a>
                 </li>
                 <li class="nav-main-heading">Admin</li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link {{ routeIs('dashboard.blogs.index', 'active') }}" href="{{ route('dashboard.blogs.index') }}">
+                        <i class="nav-main-link-icon fa fa-pencil-alt"></i>
+                        <span class="nav-main-link-name">Blog</span>
+                    </a>
+                </li>
                 <li class="nav-main-item {{ routeIs('dashboard.users.*') || routeIs('dashboard.roles.*') || routeIs('dashboard.permissions.*') ? ' open' : '' }}">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
                         <i class="nav-main-link-icon fa fa-user"></i>
@@ -77,13 +82,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-main-heading">More</li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link" href="/">
-                        <i class="nav-main-link-icon fa fa-globe"></i>
-                        <span class="nav-main-link-name">Landing</span>
-                    </a>
                 </li>
             </ul>
         </div>

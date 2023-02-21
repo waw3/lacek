@@ -24,6 +24,9 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->editColumn('blogs', function ($user) {
+                return $user->blogs->count();
+            })
             ->editColumn('created_at', function ($user) {
                 $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)
                     ->format('d-m-Y h:i:s a');
@@ -34,12 +37,25 @@ class UsersDataTable extends DataTable
                     ->format('d-m-Y h:i:s a');
                 return $formatedDate;
             })
-            ->addColumn('action', function ($user) {
+            ->addColumn('edit', function ($user) {
                 $url = url(route('dashboard.users.edit', $user->id));
-                $EditButton = '<a class="btn btn-danger btn-sm" href="' . $url . '">Edit</a>';
+                $EditButton = '<a class="btn btn-danger btn-sm" href="' . $url . '"><i class="fa fa-pencil"></i></a>';
                 return $EditButton;
             })
-            ->rawColumns(['action'])
+            ->addColumn('delete', function ($user) {
+
+                $DelButton = '<form action="' . url(route('dashboard.users.destroy', $user->id)) . '" method="post" onsubmit="return confirm(\'are you sure you want to delete this user?\')">
+                    <input type="hidden" name="_token" value="' . csrf_token() . '" />
+                    <input type="hidden" name="_method" value="delete">
+                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                    </form>';
+
+                if($user->id == auth()->user()->id)
+                    $DelButton = '';
+
+                return $DelButton;
+            })
+            ->rawColumns(['edit', 'delete'])
             ->setRowId('id');
     }
 
@@ -87,12 +103,20 @@ class UsersDataTable extends DataTable
             Column::make('first_name'),
             Column::make('last_name'),
             Column::make('email'),
+            Column::make('blogs')
+                ->searchable(true),
             Column::make('created_at'),
             Column::make('updated_at'),
-            Column::computed('action')
+            Column::computed('edit')
+                ->title('')
                 ->exportable(false)
                 ->printable(false)
-                ->width(60)
+                ->width(50),
+            Column::computed('delete')
+                ->title('')
+                ->exportable(false)
+                ->printable(false)
+                ->width(50)
         ];
     }
 

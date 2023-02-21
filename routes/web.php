@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\PermissionsController;
 use App\Http\Controllers\Dashboard\RolesController;
 use App\Http\Controllers\Dashboard\UsersController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\BlogsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +43,5 @@ Route::middleware(['auth', 'role:user|admin'])
         Route::resource('/users', UsersController::class);
         Route::resource('/roles', RolesController::class);
         Route::resource('/permissions', PermissionsController::class);
-        Route::resource('/posts', PostsController::class);
+        Route::resource('/blogs', BlogsController::class);
 });

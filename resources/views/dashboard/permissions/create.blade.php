@@ -39,22 +39,12 @@
             </h3>
         </div>
         <div class="block-content block-content-full">
-
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    @foreach($errors->all() as $message)
-                        - {{ $message }}
-                    @endforeach
-                </div>
-            @endif
-
             <form action="{{ route('dashboard.permissions.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @include('dashboard.permissions._form', [
                     'button' => 'Create'
                 ])
             </form>
-
         </div>
     </div>
 </div>

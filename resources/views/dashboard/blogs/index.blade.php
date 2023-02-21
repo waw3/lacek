@@ -30,13 +30,13 @@
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-grow-1 fs-3 fw-semibold my-2 my-sm-3">Posts</h1>
+            <h1 class="flex-grow-1 fs-3 fw-semibold my-2 my-sm-3">Blogs</h1>
             <nav class="flex-shrink-0 my-2 my-sm-0 ms-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <a href="{{ route('dashboard.index') }}">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Posts</li>
+                    <li class="breadcrumb-item active" aria-current="page">Blogs</li>
                 </ol>
             </nav>
         </div>
@@ -48,10 +48,10 @@
     <div class="block block-rounded">
         <div class="block-header block-header-default">
             <h3 class="block-title">
-                Manage <small>Posts</small>
+                Manage <small>Blogs</small>
             </h3>
             <div class="block-options">
-                <a href="{{ route('dashboard.posts.create') }}" class="btn btn-sm btn-primary">Add Post</a>
+                <a href="{{ route('dashboard.blogs.create') }}" class="btn btn-sm btn-primary">Add Blog</a>
             </div>
         </div>
         <div class="block-content block-content-full">

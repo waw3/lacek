@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Post;
+use App\Models\Blog;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\EloquentDataTable;
@@ -13,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PostsDataTable extends DataTable
+class BlogsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,28 +24,34 @@ class PostsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('created_at', function ($post) {
-                $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $post->created_at)
+            ->editColumn('user', function ($blog) {
+                return $blog->user->fullName;
+            })
+            ->editColumn('status', function ($blog) {
+                return $blog->status == 'ACTIVE' ? 'Active' : 'In-Active';
+            })
+            ->editColumn('created_at', function ($blog) {
+                $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $blog->created_at)
                     ->format('d-m-Y h:i:s a');
                 return $formatedDate;
             })
-            ->editColumn('updated_at', function ($post) {
-                $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $post->updated_at)
+            ->editColumn('updated_at', function ($blog) {
+                $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $blog->updated_at)
                     ->format('d-m-Y h:i:s a');
                 return $formatedDate;
             })
-            ->addColumn('edit', function ($post) {
-                $url = url(route('dashboard.posts.edit', $post->id));
-                $EditButton = '<a href="' . $url . '">Edit</a>';
+            ->addColumn('edit', function ($blog) {
+                $url = url(route('dashboard.blogs.edit', $blog->id));
+                $EditButton = '<a class="btn btn-danger btn-sm" href="' . $url . '"><i class="fa fa-pencil"></i></a>';
                 return $EditButton;
             })
-            ->addColumn('delete', function ($post) {
-                $url = url(route('dashboard.posts.destroy', $post->id));
+            ->addColumn('delete', function ($blog) {
+                $url = url(route('dashboard.blogs.destroy', $blog->id));
                 $csrf = csrf_token();
-                $DelButton = '<form action="' . $url . '" method="post">
+                $DelButton = '<form action="' . $url . '" method="post" onsubmit="return confirm(\'are you sure you want to delete this blog?\')">
                     <input type="hidden" name="_token" value="' . $csrf . '" />
                     <input type="hidden" name="_method" value="delete">
-                    <button class="btn btn-danger btn-sm">del</button>
+                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                     </form>';
                 return $DelButton;
             })
@@ -56,10 +62,10 @@ class PostsDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Post $model
+     * @param \App\Models\Blog $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Post $model): QueryBuilder
+    public function query(Blog $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -72,7 +78,7 @@ class PostsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('posts-table')
+                    ->setTableId('blogs-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->orderBy(1)
@@ -94,17 +100,22 @@ class PostsDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('name'),
+            Column::make('title'),
+            Column::make('user')
+                ->searchable(true),
+            Column::make('status'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('edit')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60),
+                ->title('')
+                ->exportable(false)
+                ->printable(false)
+                ->width(50),
             Column::computed('delete')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60),
+                ->title('')
+                ->exportable(false)
+                ->printable(false)
+                ->width(50)
         ];
     }
 
@@ -115,6 +126,6 @@ class PostsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Posts_' . date('YmdHis');
+        return 'Blogs_' . date('YmdHis');
     }
 }

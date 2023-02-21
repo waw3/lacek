@@ -2,7 +2,7 @@
 
 namespace App\Models\Traits\Relationships;
 
-use App\Models\Post;
+use App\Models\Blog;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 trait UserRelationships
 {
-    public function posts(): HasMany
+    public function blogs(): HasMany
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Blog::class);
     }
 }

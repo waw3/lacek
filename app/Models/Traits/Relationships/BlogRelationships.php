@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class PostRelationships.
+ * Class BlogRelationships.
  */
-trait PostRelationships
+trait BlogRelationships
 {
     public function user(): BelongsTo
     {

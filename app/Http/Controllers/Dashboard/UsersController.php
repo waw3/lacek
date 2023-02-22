@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Dashboard;
 use Hash, Auth;
 use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
+use App\DataTables\UserBlogsDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\{User, Permission, Role};
+use App\Models\{User, Permission, Role, Blog};
 use Illuminate\Auth\Events\Registered;
 
 class UsersController extends Controller
@@ -73,6 +74,8 @@ class UsersController extends Controller
         $user->assignRole($request->roles);
         $user->givePermissionTo($request->permissions);
 
+        \Mail::to(Auth::user())->send(new \App\Mail\UserCreated($user));
+
         return redirect(route('dashboard.users.index'));
     }
 
@@ -82,10 +85,12 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, UserBlogsDataTable $dataTables)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('blogs')->with('roles')->findOrFail($id);
         $this->authorize('view', $user);
+
+        return $dataTables->render('dashboard.users.show', compact('user'));
     }
 
     /**

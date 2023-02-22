@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAbility('view all users');
+        return $user->hasAbility('dashboard.users.index');
     }
 
     /**
@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->can('view user');
+        return $user->can('dashboard.users.show');
     }
 
     /**
@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create user');
+        return $user->can('dashboard.users.create');
     }
 
     /**
@@ -52,7 +52,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->can('edit user');
+        return $user->can('dashboard.users.edit');
     }
 
     /**
@@ -64,7 +64,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->can('delete user');
+        return $user->can('dashboard.users.destroy');
     }
 
     /**

@@ -62,6 +62,15 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-end">
-    <button type="submit" class="btn btn-primary">{{$button}}</button>
+
+
+<div class="block-header block-header-default">
+    <h3 class="block-title">
+
+    </h3>
+    <div class="block-options">
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">{{$button}}</button>
+        </div>
+    </div>
 </div>

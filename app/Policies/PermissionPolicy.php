@@ -18,7 +18,7 @@ class PermissionPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAbility('view all permissions');
+        return $user->hasAbility('dashboard.permissions.index');
     }
 
     /**
@@ -30,7 +30,7 @@ class PermissionPolicy
      */
     public function view(User $user, Permission $permission)
     {
-        return $user->hasAbility('view permission');
+        return $user->hasAbility('dashboard.permissions.show');
     }
 
     /**
@@ -41,7 +41,7 @@ class PermissionPolicy
      */
     public function create(User $user)
     {
-        return $user->hasAbility('create permission');
+        return $user->hasAbility('dashboard.permissions.create');
     }
 
     /**
@@ -53,7 +53,7 @@ class PermissionPolicy
      */
     public function update(User $user, Permission $permission)
     {
-        return $user->hasAbility('update permission');
+        return $user->hasAbility('dashboard.permissions.update');
     }
 
     /**
@@ -65,7 +65,7 @@ class PermissionPolicy
      */
     public function delete(User $user, Permission $permission)
     {
-        return $user->hasAbility('delete permission');
+        return $user->hasAbility('dashboard.permissions.destroy');
     }
 
     /**

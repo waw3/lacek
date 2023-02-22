@@ -51,7 +51,9 @@
                 Manage <small>Blogs</small>
             </h3>
             <div class="block-options">
+                @can('dashboard.blogs.create', App\Models\User::class)
                 <a href="{{ route('dashboard.blogs.create') }}" class="btn btn-sm btn-primary">Add Blog</a>
+                @endcan
             </div>
         </div>
         <div class="block-content block-content-full">

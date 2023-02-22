@@ -15,6 +15,9 @@ use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
+
+    public $model = \App\Models\User::class;
+
     /**
      * Build DataTable class.
      *
@@ -28,34 +31,45 @@ class UsersDataTable extends DataTable
                 return $user->blogs->count();
             })
             ->editColumn('created_at', function ($user) {
-                $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)
-                    ->format('d-m-Y h:i:s a');
+                $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)->format('M d, Y h:i a');
                 return $formatedDate;
             })
             ->editColumn('updated_at', function ($user) {
-                $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->updated_at)
-                    ->format('d-m-Y h:i:s a');
+                $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->updated_at)->format('M d, Y h:i a');
                 return $formatedDate;
             })
+            ->addColumn('show', function ($user) {
+
+                if(auth()->user()->can('dashboard.blogs.show', App\Models\User::class)){
+                    return '<a class="btn btn-danger btn-sm" href="' . url(route('dashboard.users.show', $user->id)) . '"><i class="fa fa-magnifying-glass"></i></a>';
+                }
+
+                return '';
+            })
             ->addColumn('edit', function ($user) {
-                $url = url(route('dashboard.users.edit', $user->id));
-                $EditButton = '<a class="btn btn-danger btn-sm" href="' . $url . '"><i class="fa fa-pencil"></i></a>';
-                return $EditButton;
+
+                if(auth()->user()->can('dashboard.blogs.edit', App\Models\User::class)){
+                    return '<a class="btn btn-danger btn-sm" href="' . url(route('dashboard.users.edit', $user->id)) . '"><i class="fa fa-pencil"></i></a>';
+                }
+
+                return '';
             })
             ->addColumn('delete', function ($user) {
 
-                $DelButton = '<form action="' . url(route('dashboard.users.destroy', $user->id)) . '" method="post" onsubmit="return confirm(\'are you sure you want to delete this user?\')">
-                    <input type="hidden" name="_token" value="' . csrf_token() . '" />
-                    <input type="hidden" name="_method" value="delete">
-                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                    </form>';
+                if(auth()->user()->can('dashboard.blogs.destroy', App\Models\User::class)){
 
-                if($user->id == auth()->user()->id)
-                    $DelButton = '';
+                    if(auth()->user()->id != $user->id || !auth()->user()->hasRole('admin')) {
+                        return '<form action="' . url(route('dashboard.users.destroy', $user->id)) . '" method="post" onsubmit="return confirm(\'are you sure you want to delete this user?\')">
+                            <input type="hidden" name="_token" value="' . csrf_token() . '" />
+                            <input type="hidden" name="_method" value="delete">
+                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                            </form>';
+                    }
+                }
 
-                return $DelButton;
+                return '';
             })
-            ->rawColumns(['edit', 'delete'])
+            ->rawColumns(['show','edit', 'delete'])
             ->setRowId('id');
     }
 
@@ -65,9 +79,10 @@ class UsersDataTable extends DataTable
      * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model): QueryBuilder
+    public function query(): QueryBuilder
     {
-        return $model->newQuery();
+
+        return User::select();
     }
 
     /**
@@ -104,9 +119,15 @@ class UsersDataTable extends DataTable
             Column::make('last_name'),
             Column::make('email'),
             Column::make('blogs')
-                ->searchable(true),
+                ->searchable(false)
+                ->sortable(false),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('show')
+                ->title('')
+                ->exportable(false)
+                ->printable(false)
+                ->width(50),
             Column::computed('edit')
                 ->title('')
                 ->exportable(false)

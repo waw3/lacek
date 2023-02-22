@@ -55,7 +55,7 @@
                 </li>
                 <li class="nav-main-heading">Admin</li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{ routeIs('dashboard.blogs.index', 'active') }}" href="{{ route('dashboard.blogs.index') }}">
+                    <a class="nav-main-link {{ routeIs('dashboard.blogs.*', 'active') }}" href="{{ route('dashboard.blogs.index') }}">
                         <i class="nav-main-link-icon fa fa-pencil-alt"></i>
                         <span class="nav-main-link-name">Blog</span>
                     </a>
@@ -67,17 +67,17 @@
                     </a>
                     <ul class="nav-main-submenu">
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{ routeIs('dashboard.users.index', 'active') }}" href="{{ route('dashboard.users.index') }}">
+                            <a class="nav-main-link {{ routeIs('dashboard.users.*', 'active') }}" href="{{ route('dashboard.users.index') }}">
                                 <span class="nav-main-link-name">Users</span>
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{ routeIs('dashboard.roles.index', 'active') }}" href="{{ route('dashboard.roles.index') }}">
+                            <a class="nav-main-link {{ routeIs('dashboard.roles.*', 'active') }}" href="{{ route('dashboard.roles.index') }}">
                                 <span class="nav-main-link-name">Roles</span>
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{ routeIs('dashboard.permissions.index', 'active') }}" href="{{ route('dashboard.permissions.index') }}">
+                            <a class="nav-main-link {{ routeIs('dashboard.permissions.*', 'active') }}" href="{{ route('dashboard.permissions.index') }}">
                                 <span class="nav-main-link-name">Permissions</span>
                             </a>
                         </li>

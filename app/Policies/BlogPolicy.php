@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Role;
+use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RolePolicy
+class BlogPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAbility('dashboard.roles.index');
+        return $user->hasAbility('dashboard.blogs.index');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Blog  $Blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Role $role)
+    public function view(User $user, Blog $Blog)
     {
-        return $user->hasAbility('dashboard.roles.show');
+        return $user->hasAbility('dashboard.blogs.show');
     }
 
     /**
@@ -41,41 +41,41 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        return $user->hasAbility('dashboard.roles.create');
+        return $user->hasAbility('dashboard.blogs.create');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Blog  $Blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Role $role)
+    public function update(User $user, Blog $Blog)
     {
-        return $user->hasAbility('dashboard.roles.update');
+        return $user->hasAbility('dashboard.blogs.update');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Blog  $Blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Role $role)
+    public function delete(User $user, Blog $Blog)
     {
-        return $user->hasAbility('dashboard.roles.destroy');
+        return $user->hasAbility('dashboard.blogs.destroy');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Blog  $Blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Role $role)
+    public function restore(User $user, Blog $Blog)
     {
         //
     }
@@ -84,10 +84,10 @@ class RolePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Blog  $Blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Role $role)
+    public function forceDelete(User $user, Blog $Blog)
     {
         //
     }

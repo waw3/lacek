@@ -1,9 +1,21 @@
 {
   "eablokker.tabsSidebar.config.customKindGroupsOrder" : [
-    "javascript"
+    "markdown",
+    "advphp",
+    "blade"
   ],
   "eablokker.tabsSidebar.config.customTabOrder" : [
-    "\/Users\/willy\/Projects\/lacek\/vite.config.js"
+    "\/Users\/willy\/Projects\/lacek\/README.md",
+    "\/Users\/willy\/Projects\/lacek\/app\/DataTables\/UsersDataTable.php",
+    "\/Users\/willy\/Projects\/lacek\/app\/DataTables\/RolesDataTable.php",
+    "\/Users\/willy\/Projects\/lacek\/app\/DataTables\/PermissionsDataTable.php",
+    "\/Users\/willy\/Projects\/lacek\/app\/Http\/Controllers\/Auth\/RegisterController.php",
+    "\/Users\/willy\/Projects\/lacek\/resources\/views\/email\/welcome_message.blade.php",
+    "\/Users\/willy\/Projects\/lacek\/resources\/views\/email\/blog_created.blade.php",
+    "\/Users\/willy\/Projects\/lacek\/resources\/views\/email\/user_created.blade.php",
+    "\/Users\/willy\/Projects\/lacek\/app\/Http\/Controllers\/Dashboard\/UsersController.php",
+    "\/Users\/willy\/Projects\/lacek\/app\/Mail\/UserCreated.php",
+    "\/Users\/willy\/Projects\/lacek\/database\/seeders\/CreateAdminUserSeeder.php"
   ],
   "workspace.art_style" : 0,
   "workspace.name" : "lacek"

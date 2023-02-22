@@ -52,7 +52,9 @@
                 Manage <small>Permissions</small>
             </h3>
             <div class="block-options">
+                @can('dashboard.permissions.create', App\Models\User::class)
                 <a href="{{ route('dashboard.permissions.create') }}" class="btn btn-sm btn-primary">Add Permission</a>
+                @endcan
             </div>
         </div>
         <div class="block-content block-content-full">

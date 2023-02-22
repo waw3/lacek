@@ -51,7 +51,9 @@
                 Manage <small>Users</small>
             </h3>
             <div class="block-options">
+                @can('dashboard.users.create', App\Models\User::class)
                 <a href="{{ route('dashboard.users.create') }}" class="btn btn-sm btn-primary">Add User</a>
+                @endcan
             </div>
         </div>
         <div class="block-content block-content-full">

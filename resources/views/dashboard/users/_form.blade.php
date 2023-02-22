@@ -69,4 +69,13 @@
     </div>
 </div>
 
-<button type="submit" class="btn btn-primary">{{$button}}</button>
+
+<div class="block-header block-header-default">
+    <h3 class="block-title">
+
+    </h3>
+    <div class="block-options">
+        <button type="submit" class="btn btn-primary">{{$button}}</button>
+    </div>
+</div>
+

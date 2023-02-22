@@ -13,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class BlogsDataTable extends DataTable
+class UserBlogsDataTable extends DataTable
 {
 
 
@@ -23,7 +23,7 @@ class BlogsDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    public function dataTable($query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
             ->editColumn('user', function ($blog) {
@@ -80,17 +80,9 @@ class BlogsDataTable extends DataTable
      * @param \App\Models\Blog $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query($user_id = null)
+    public function query(): QueryBuilder
     {
-
-        $query = Blog::select();
-
-        if(!is_null($user_id)){
-            $query->where('user_id', $user_id);
-        }
-
-
-        return $query;
+        return Blog::where('user_id', request('user'));
     }
 
     /**

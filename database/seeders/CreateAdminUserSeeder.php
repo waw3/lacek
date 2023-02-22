@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\PermissionRegistrar;
-use App\Models\{User, Permission, Role};
+use App\Models\{User, Permission, Role, Blog};
 use Database\Seeders\Traits\DisableForeignKeys;
 use Database\Seeders\Traits\TruncateTable;
 
@@ -17,23 +17,6 @@ class CreateAdminUserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'first_name' => 'Admin',
-            'last_name' => 'User',
-            'email' => 'admin@email.com',
-            'password' => 'password',
-            'active' => true,
-            'email_verified_at' => date_create()->format('Y-m-d H:i:s')
-        ]);
-
-        User::create([
-            'first_name' => 'Default',
-            'last_name' => 'User',
-            'email' => 'user@email.com',
-            'password' => 'password',
-            'active' => true,
-            'email_verified_at' => date_create()->format('Y-m-d H:i:s')
-        ]);
 
         // Create Roles
         $admin = Role::create(['name' => 'admin']);
@@ -53,10 +36,51 @@ class CreateAdminUserSeeder extends Seeder
         $admin->givePermissionTo(Permission::all());
 
         // Assign Permissions to other Roles
-        $user->givePermissionTo('admin.dashboard.index');
+        $user->givePermissionTo([
+            'dashboard.index',
+            'dashboard.users.index',
+            'dashboard.users.show',
+            'dashboard.blogs.index',
+            'dashboard.blogs.show'
+        ]);
 
-        // Assign Roles
-        User::find(1)->assignRole('admin');
-        User::find(2)->assignRole('user');
+
+        // Create Admin Test Users
+        User::factory()
+            ->has(
+                Blog::factory()
+                    ->count(3)
+                )
+            ->create([
+                    'first_name' => 'Admin',
+                    'last_name' => 'User',
+                    'email' => 'admin@email.com',
+                    'password' => 'password',
+                    'active' => true,
+                    'email_verified_at' => date_create()->format('Y-m-d H:i:s')
+                ])
+            ->assignRole('admin');
+
+        // Create Default Test Users
+        User::factory()
+            ->create([
+                'first_name' => 'Default',
+                'last_name' => 'User',
+                'email' => 'user@email.com',
+                'password' => 'password',
+                'active' => true,
+                'email_verified_at' => date_create()->format('Y-m-d H:i:s')
+            ])
+            ->assignRole('user');
+
+        // Create 5 Test Users
+        User::factory()
+            ->count(5)
+            ->create()
+            ->each(function ($user) {
+                $user->assignRole('user');
+            });
+
+
     }
 }

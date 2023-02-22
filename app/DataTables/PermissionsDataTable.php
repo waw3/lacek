@@ -26,28 +26,33 @@ class PermissionsDataTable extends DataTable
         return (new EloquentDataTable($query))
         ->editColumn('created_at', function ($permission) {
             $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $permission->created_at)
-                ->format('d-m-Y h:i:s a');
+                ->format('M d, Y h:i a');
             return $formatedDate;
         })
         ->editColumn('updated_at', function ($permission) {
             $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $permission->updated_at)
-                ->format('d-m-Y h:i:s a');
+                ->format('M d, Y h:i a');
             return $formatedDate;
         })
         ->addColumn('edit', function ($permission) {
-            $url = url(route('dashboard.permissions.edit', $permission->id));
-            $EditButton = '<a class="btn btn-danger btn-sm" href="' . $url . '"><i class="fa fa-pencil"></i></a>';
-            return $EditButton;
+
+            if(auth()->user()->can('dashboard.permissions.edit', App\Models\User::class)){
+                return '<a class="btn btn-danger btn-sm" href="' . url(route('dashboard.permissions.edit', $permission->id)) . '"><i class="fa fa-pencil"></i></a>';
+            }
+
+            return '';
         })
         ->addColumn('delete', function ($permission) {
-            $url = url(route('dashboard.permissions.destroy', $permission->id));
-            $csrf = csrf_token();
-            $DelButton = '<form action="' . $url . '" method="post" onsubmit="return confirm(\'are you sure you want to delete this permission?\')">
-                <input type="hidden" name="_token" value="' . $csrf . '" />
-                <input type="hidden" name="_method" value="delete">
-                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                </form>';
-            return $DelButton;
+
+            if(auth()->user()->can('dashboard.permissions.destroy', App\Models\User::class)){
+                return '<form action="' . url(route('dashboard.permissions.destroy', $permission->id)) . '" method="post" onsubmit="return confirm(\'are you sure you want to delete this permission?\')">
+                    <input type="hidden" name="_token" value="' . csrf_token() . '" />
+                    <input type="hidden" name="_method" value="delete">
+                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                    </form>';
+            }
+
+            return '';
         })
         ->rawColumns(['edit', 'delete'])
         ->setRowId('id');

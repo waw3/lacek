@@ -71,7 +71,10 @@ class BlogsController extends Controller
         //dd($data);
         $blog = Blog::create($data);
 
-        return redirect()->route('dashboard.blogs.index')->withSuccess('Blog Created.');
+
+        \Mail::to(Auth::user())->send(new \App\Mail\BlogCreated($blog));
+
+        return redirect()->route('dashboard.blogs.show', compact('blog'))->withSuccess('Blog Created.');
     }
 
     /**
@@ -84,7 +87,8 @@ class BlogsController extends Controller
     {
         $this->authorize('view', $blog);
 
-        return view('blogs.show', compact('blog'));
+        return view('dashboard.blogs.show', compact('blog'));
+
     }
 
     /**
@@ -117,7 +121,7 @@ class BlogsController extends Controller
         $blog->update($request->validated());
         $blog->update(['photo' => $photoPath]);
 
-        return redirect()->route('dashboard.blogs.index')->withSuccess('Blog Updated.');
+        return redirect()->route('dashboard.blogs.show', compact('blog'))->withSuccess('Blog Updated.');
     }
 
     /**
